@@ -3,6 +3,8 @@ import React from 'react';
 import Board from './Board.js';
 import ColorPicker from './ColorPicker';
 
+import {dijkstraSearch, Graph} from './Graph.js';
+
 class Element{
   constructor(name, color, value){
     this.name = name;
@@ -19,6 +21,7 @@ class App extends React.Component {
     const size = 20;
     const active = 0;
 
+    this.size = size;
     this.start_name = 'Start';
     this.end_name = 'End';
     this.base_tile = 0;
@@ -32,9 +35,9 @@ class App extends React.Component {
     ];
 
     /* Init Board Elements */
-    var boardElements = []
+    var boardElements = new Array(size * size);
     for(var i = 0; i < size * size; i++){
-      boardElements.push([pickerElements[active].color, pickerElements[active].value]);
+      boardElements[i] = ([pickerElements[active].color, pickerElements[active].value]);
     }
 
     this.state = {
@@ -47,6 +50,25 @@ class App extends React.Component {
     };
   }
 
+  /* Handle searching of the board */
+  startSearch(){
+    var g = new Graph(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
+    var visited = dijkstraSearch(g);
+
+    visited.forEach(node => {
+      const elements = this.state.boardElements;
+
+      elements[node] = ['Pink', elements[node][1]];
+
+      this.setState({
+        boardElements: elements
+      })
+    });
+
+  }
+
+
+  /* Handle Edditing of the board */
   handlePickerClick(i){
     this.setState({
       active: i
@@ -62,7 +84,7 @@ class App extends React.Component {
     elements[i] = [active.color, active.value];
 
     this.setState({
-      boardElements: elements,
+      boardElements: elements
     });
 
     /* If the tile was a start or end tile we need to remove the previous if
@@ -106,6 +128,7 @@ class App extends React.Component {
         <div className="board-editor">
           <ColorPicker elements={this.state.pickerElements} active={this.state.active} onClick={(i) => this.handlePickerClick(i)}/>
           <Board size={this.state.size} elements={this.state.boardElements} onClick={(i) => this.handleBoardClick(i)}/>
+          <button onClick={() => this.startSearch()}>Go</button>
         </div>
       </div>
     );
