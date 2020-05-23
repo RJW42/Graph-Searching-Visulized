@@ -1,0 +1,47 @@
+.app{
+  width: 100%;
+}
+
+.board-element{
+  background-color: grey;
+  border: 2px solid light-grey;
+  padding: none;
+  margin: none;
+  display: inline-block;
+
+  width: 20px;
+  height: 20px;
+}
+
+.color-picker-element{
+  display: block;
+}
+
+.color-picker-element button, .color-picker-element h3{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.color-picker-element button{
+  background-color: grey;
+  border: 2px solid light-grey;
+  padding: none;
+  margin: none;
+
+  width: 30px;
+  height: 30px;
+}
+
+.color-picker-element h3{
+  margin-left: 20px;
+}
+
+.color-picker, .board{
+  float: left;
+  display: block;
+  margin: 15px;
+}
+
+.active{
+  border-color: red;
+}
