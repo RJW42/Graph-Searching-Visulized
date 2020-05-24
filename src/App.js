@@ -225,15 +225,17 @@ class App extends React.Component {
                        onClick={(i) => this.handlePickerClick(i)}/>
           <Board size={this.state.size} elements={this.state.boardElements}
                  onClick={(i) => this.handleBoardClick(i)}/>
-          <button onClick={() => this.startSearch()}>
-            Start Search
-          </button>
-          <button onClick={() => this.resetSearchColors()}>
-            Reset Search
-          </button>
-          <button onClick={() => this.clearBoard()}>
-            Clear Board
-          </button>
+          <div className="editor-controls">
+            <button className="start" onClick={() => this.startSearch()}>
+              Start
+            </button>
+            <button className="reset" onClick={() => this.resetSearchColors()}>
+              Reset
+            </button>
+            <button className="clear" onClick={() => this.clearBoard()}>
+              Clear
+            </button>
+          </div>
         </div>
       </div>
     );

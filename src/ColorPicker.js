@@ -4,11 +4,11 @@ class Element extends React.Component{
   render(){
     return(
       <div className="color-picker-element">
-        <button className={"color-picker-element" + this.props.className}
+        <button className={"color-picker-element-button" + this.props.className}
                 onClick={() => this.props.onClick()}
                 style={{backgroundColor: this.props.color}}>
         </button>
-        <h3> {this.props.name} </h3>
+        <h3 className={this.props.className}> {this.props.name} </h3>
       </div>
     );
   }

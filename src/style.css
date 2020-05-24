@@ -1,5 +1,6 @@
 .app{
   width: 100%;
+  margin: auto;
 }
 
 .board-element{
@@ -15,16 +16,18 @@
 
 .color-picker-element{
   display: block;
+  color: grey;
 }
 
-.color-picker-element button, .color-picker-element h3{
+.color-picker-element-button, .color-picker-element h3{
   display: inline-block;
   vertical-align: middle;
 }
 
-.color-picker-element button{
+.color-picker-element-button{
   background-color: grey;
-  border: 4px solid light-grey;
+  border: 3px solid lightgrey;
+  border-radius: 5px;
   padding: none;
   margin: none;
 
@@ -36,7 +39,7 @@
   margin-left: 20px;
 }
 
-.color-picker, .board{
+.color-picker, .board, .editor-controls{
   float: left;
   display: block;
   margin: 15px;
@@ -44,4 +47,52 @@
 
 .active{
   border-color: red;
+  color: black;
+}
+
+
+.editor-controls button{
+  display: block;
+  margin-bottom: 20px;
+  padding: none;
+
+  text-align: center;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  font-size: 18px;
+  background-color: white;
+
+  width: 120px;
+  padding: 10px;
+}
+
+.start{
+  color: black;
+  border: 2px solid green;
+}
+
+.start:hover{
+  background-color: green;
+  color: white;
+}
+
+.reset{
+  color: black;
+  border: 2px solid blue;
+}
+
+.reset:hover{
+  background-color: blue;
+  color:white;
+}
+
+.clear{
+  color: black;
+  border: 2px solid red;
+}
+
+.clear:hover{
+  background-color: red;
+  color:white;
 }
