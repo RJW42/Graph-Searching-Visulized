@@ -52,19 +52,30 @@ class App extends React.Component {
 
   /* Handle searching of the board */
   startSearch(){
-    var g = new Graph(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
-    var visited = dijkstraSearch(g);
+    let g = new Graph(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
+    let visited_path = dijkstraSearch(g);
 
+    let visited = visited_path[0];
+    let path = visited_path[1];
+
+    /* Print all visited nodes as pinl */
+    const elements = this.state.boardElements;
     visited.forEach(node => {
-      const elements = this.state.boardElements;
-
       elements[node] = ['Pink', elements[node][1]];
-
-      this.setState({
-        boardElements: elements
-      })
     });
+    this.setState({
+      boardElements: elements
+    })
 
+    /* Print path nodes as red */
+    path.forEach(node => {
+      elements[node] = ['Red', elements[node][1]];
+      setTimeout(() => {
+        this.setState({
+          boardElements: elements
+        });
+      }, 1000);
+    });
   }
 
 

@@ -59,6 +59,9 @@ class Graph{
 
           this.adj[v1][v2] = weight;
           this.adj[v2][v1] = weight;
+        }else{
+          this.adj[v1][v2] = 0;
+          this.adj[v2][v1] = 0;
         }
       }
     });
@@ -72,29 +75,31 @@ class Graph{
 function dijkstraSearch(graph){
   var dist = new Array(graph.num_nodes).fill(1000000);
   var sptSet = new Array(graph.num_nodes).fill(false);
+  var parents = new Array(graph.num_nodes).fill(0);
   var visited = [];
 
   dist[graph.start_node] = 0;
+  parents[graph.start_node] = -1;
 
   for(var count = 0; count < graph.num_nodes; count++){
     let u = minDistance(dist, sptSet, graph);
 
     sptSet[u] = true;
+    if(u === graph.end_node){
+      break;
+    }
 
-    for(var v = 0; v < graph.num_nodes; v++){
-      if(!sptSet[v] && graph.adj[u][v] !== 0 &&
-         dist[u] !== 1000000 && dist[u] + graph.adj[u][v] < dist[v])
+    for(let v = 0; v < graph.num_nodes; v++){
+      if(!sptSet[v] && graph.adj[u][v] !== 0 && dist[u] !== 1000000 && dist[u] + graph.adj[u][v] < dist[v]){
         dist[v] = dist[u] + graph.adj[u][v];
+        parents[v] = u;
         visited.push(v);
-
-        if(v === graph.end_node){
-          return visited;
-        }
+      }
     }
   }
 
-  console.log(dist[graph.end_node]);
-  return visited;
+  var path = getPath(graph.end_node, parents, []);
+  return [visited, path];
 }
 
 function minDistance(dist, sptSet, graph){
@@ -109,6 +114,16 @@ function minDistance(dist, sptSet, graph){
   }
 
   return min_index;
+}
+
+function getPath(current_node, parents, curren_path){
+    let new_node = parents[current_node];
+    if(new_node !== -1){
+      curren_path.push(new_node);
+      return getPath(new_node, parents, curren_path);
+    }else{
+      return curren_path;
+    }
 }
 
 export default Graph;
