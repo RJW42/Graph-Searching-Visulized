@@ -14,8 +14,15 @@ class Element extends React.Component{
 class Board extends React.Component{
   /* Rendering */
   renderElement(i){
+    let value = this.props.elements[i][0];
+
+    /* If the override color has been set then use it */
+    if(this.props.elements[i][2].length > 0){
+      value = this.props.elements[i][2];
+    }
+
     return (
-      <Element value={this.props.elements[i][0]}
+      <Element value={value}
                onClick={() => this.props.onClick(i)}/>
     );
   }

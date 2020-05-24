@@ -4,7 +4,7 @@
 
 .board-element{
   background-color: grey;
-  border: 2px solid light-grey;
+  border: 2px groove lightgrey;
   padding: none;
   margin: none;
   display: inline-block;
@@ -24,7 +24,7 @@
 
 .color-picker-element button{
   background-color: grey;
-  border: 2px solid light-grey;
+  border: 4px solid light-grey;
   padding: none;
   margin: none;
 
