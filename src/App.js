@@ -34,6 +34,8 @@ class App extends React.Component {
     /* Init picker elements */
     var pickerElements = [
       new Element('Base Tile', 'Cyan', 1),
+      new Element('Fast Tile', 'Blue', 2),
+      new Element('Faster Tile', 'Orange', 4),
       new Element('Wall', 'Black', -1),
       new Element(this.start_name, 'Green', 1),
       new Element(this.end_name, 'Red', 1)

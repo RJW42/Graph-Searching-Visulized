@@ -55,7 +55,7 @@ class Graph{
 
         if(elements[v1][1] > 0 && elements[v2][1] > 0){
           /* Valid values so continue to add edge */
-          let weight = (elements[v1][1] + elements[v2][1]) / 2;
+          let weight = 1 / ((elements[v1][1] + elements[v2][1]) / 2);
 
           this.adj[v1][v2] = weight;
           this.adj[v2][v1] = weight;
