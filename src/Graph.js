@@ -70,61 +70,73 @@ class Graph{
   getArrayIndex(x, y){
     return (this.row_size * y) + x;
   }
+
+  search(){
+
+  }
 }
 
-function dijkstraSearch(graph){
-  var dist = new Array(graph.num_nodes).fill(1000000);
-  var sptSet = new Array(graph.num_nodes).fill(false);
-  var parents = new Array(graph.num_nodes).fill(0);
-  var visited = [];
+class Dijkstra extends Graph{
+  search(){
+    /* Dist stores the distance from the start node to all other nodes
+     * SptSet stores all nodes visited by the search
+     * Parents stores for each node its parent in the path back to the starting node
+     * visited stores the order in which nodes were visited by the searching algoerithm
+     */
+    var dist = new Array(this.num_nodes).fill(1000000);
+    var sptSet = new Array(this.num_nodes).fill(false);
+    var parents = new Array(this.num_nodes).fill(0);
+    var visited = [];
 
-  dist[graph.start_node] = 0;
-  parents[graph.start_node] = -1;
+    dist[this.start_node] = 0;
+    parents[this.start_node] = -1;
 
-  for(var count = 0; count < graph.num_nodes; count++){
-    let u = minDistance(dist, sptSet, graph);
+    /* Perform the search */
+    for(var count = 0; count < this.num_nodes; count++){
+      /* Get the node with the smallest distance from the start */
+      let u = this.minDistance(dist, sptSet);
 
-    sptSet[u] = true;
-    if(u === graph.end_node){
-      break;
-    }
+      sptSet[u] = true;
 
-    for(let v = 0; v < graph.num_nodes; v++){
-      if(!sptSet[v] && graph.adj[u][v] !== 0 && dist[u] !== 1000000 && dist[u] + graph.adj[u][v] < dist[v]){
-        dist[v] = dist[u] + graph.adj[u][v];
-        parents[v] = u;
-        visited.push(v);
+      /* Update the distance from this node to all other nodes */
+      for(let v = 0; v < this.num_nodes; v++){
+        if(!sptSet[v] && this.adj[u][v] !== 0 && dist[u] !== 1000000 && dist[u] + this.adj[u][v] < dist[v]){
+          dist[v] = dist[u] + this.adj[u][v];
+          parents[v] = u;
+          visited.push(v);
+        }
       }
     }
+
+    /* Return the output */
+    var path = this.getPath(this.end_node, parents, []);
+    return [visited, path];
   }
 
-  var path = getPath(graph.end_node, parents, []);
-  return [visited, path];
-}
+  minDistance(dist, sptSet){
+    var min = 1000000;
+    var min_index = -1;
 
-function minDistance(dist, sptSet, graph){
-  var min = 1000000;
-  var min_index = -1;
-
-  for(var v = 0; v < graph.num_nodes; v++){
-    if(sptSet[v] === false && dist[v] <= min){
-      min = dist[v];
-      min_index = v;
+    for(var v = 0; v < this.num_nodes; v++){
+      if(sptSet[v] === false && dist[v] <= min){
+        min = dist[v];
+        min_index = v;
+      }
     }
+
+    return min_index;
   }
 
-  return min_index;
-}
-
-function getPath(current_node, parents, curren_path){
-    let new_node = parents[current_node];
-    if(new_node !== -1){
-      curren_path.push(new_node);
-      return getPath(new_node, parents, curren_path);
-    }else{
-      return curren_path;
-    }
+  getPath(current_node, parents, curren_path){
+      let new_node = parents[current_node];
+      if(new_node !== -1){
+        curren_path.push(new_node);
+        return this.getPath(new_node, parents, curren_path);
+      }else{
+        return curren_path;
+      }
+  }
 }
 
 export default Graph;
-export {dijkstraSearch, Graph};
+export {Graph, Dijkstra};

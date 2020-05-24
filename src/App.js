@@ -3,7 +3,7 @@ import React from 'react';
 import Board from './Board.js';
 import ColorPicker from './ColorPicker';
 
-import {dijkstraSearch, Graph} from './Graph.js';
+import {Dijkstra} from './Graph.js';
 
 class Element{
   constructor(name, color, value){
@@ -52,32 +52,48 @@ class App extends React.Component {
 
   /* Handle searching of the board */
   startSearch(){
-    let g = new Graph(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
-    let visited_path = dijkstraSearch(g);
+    let g = new Dijkstra(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
+    let visited_path = g.search();
 
     let visited = visited_path[0];
-    let path = visited_path[1];
+    let path = visited_path[1].reverse();
 
     /* Print all visited nodes as pinl */
-    const elements = this.state.boardElements;
+    const elements = this.state.boardElements.slice();
+    let t1 = 1000;
+    let continue_loop = true;
     visited.forEach(node => {
-      elements[node] = ['Pink', elements[node][1]];
+      if(node === this.state.end_pos){
+        continue_loop = false;
+      }
+
+      if(continue_loop){
+        t1 += 10;
+        setTimeout(() => {
+          elements[node] = ['Pink', elements[node][1]];
+          this.setState({
+            boardElements: elements
+          })
+        }, t1);
+      }
     });
-    this.setState({
-      boardElements: elements
-    })
 
     /* Print path nodes as red */
+    let t2 = t1;
     path.forEach(node => {
-      elements[node] = ['Red', elements[node][1]];
+      t2 += 100;
       setTimeout(() => {
+        elements[node] = ['Red', elements[node][1]];
         this.setState({
           boardElements: elements
-        });
-      }, 1000);
+        })
+      }, t2);
     });
   }
 
+  updateColors(){
+    console.log("Test 2");
+  }
 
   /* Handle Edditing of the board */
   handlePickerClick(i){
