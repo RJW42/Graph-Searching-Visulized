@@ -3,7 +3,7 @@ import React from 'react';
 import Board from './Board.js';
 import ColorPicker from './ColorPicker';
 
-import {Dijkstra} from './Graph.js';
+import {Dijkstra, AStar} from './Graph.js';
 
 class Element{
   constructor(name, color, value){
@@ -69,7 +69,7 @@ class App extends React.Component {
     this.clean = false;
     this.busy = true;
 
-    let g = new Dijkstra(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
+    let g = new AStar(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
     let visited_path = g.search();
 
     let visited = visited_path[0];
