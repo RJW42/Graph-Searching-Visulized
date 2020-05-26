@@ -3,7 +3,8 @@ import React from 'react';
 import Board from './components/Board.js';
 import ColorPicker from './components/ColorPicker';
 
-import {Dijkstra, AStar} from './graph-utils/Graph.js';
+import AStar from './graph-utils/AStar.js';
+import Dijkstra from './graph-utils/Dijkstra.js';
 
 class Element{
   constructor(name, color, value){
@@ -47,7 +48,7 @@ class App extends React.Component {
     super(props);
 
     /* Base values */
-    const size = 20;
+    const size = 25;
     const active = 0;
 
     /* Base values */
@@ -261,6 +262,7 @@ class App extends React.Component {
   render(){
     return (
       <div className="app">
+        <h1> Graph Search Visualization </h1>
         <div className="board-editor">
           <ColorPicker elements={this.state.pickerElements} active={this.state.active}
                        onClick={(i) => this.handlePickerClick(i)}/>
