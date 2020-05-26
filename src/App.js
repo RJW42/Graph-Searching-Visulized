@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Board from './Board.js';
-import ColorPicker from './ColorPicker';
+import Board from './components/Board.js';
+import ColorPicker from './components/ColorPicker';
 
-import {Dijkstra, AStar} from './Graph.js';
+import {Dijkstra, AStar} from './graph-utils/Graph.js';
 
 class Element{
   constructor(name, color, value){
@@ -94,7 +94,6 @@ class App extends React.Component {
   startSearch(){
     if(this.busy)
       return;
-
     /* First check if can actually search */
     if(this.state.start_pos === -1 || this.state.end_pos === -1)
       return;
@@ -102,6 +101,7 @@ class App extends React.Component {
     this.clean = false;
     this.busy = true;
 
+    /* Create a graph and start the search */
     let g = new (this.graphs[this.state.current_graph])(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
     let visited_path = g.search();
 
