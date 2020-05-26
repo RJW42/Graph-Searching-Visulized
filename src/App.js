@@ -13,6 +13,35 @@ class Element{
   }
 }
 
+class SearchDropdown extends React.Component{
+  renderContent(){
+    let content = [];
+
+    for(let i = 0; i < this.props.searches.length; i++){
+      content.push(
+        <button class="dropdown-content-button" onClick={() => this.props.onClick(this.props.searches[i][1])}>
+          {this.props.searches[i][0]}
+        </button>
+      );
+    }
+
+    return content;
+  }
+
+  render(){
+    return(
+      <div class="search-dropdown">
+        <button class="search-dropdown-button">
+          {this.props.searches[this.props.current][0]}
+        </button>
+        <div class="search-dropdown-contnent">
+          {this.renderContent()}
+        </div>
+      </div>
+    );
+  }
+}
+
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -30,6 +59,9 @@ class App extends React.Component {
     this.path_delay = 100;
     this.clean = true;
     this.busy = false;
+
+    this.graphs = [AStar, Dijkstra];
+    this.searches = [["AStar", 0], ["Dijkstra", 1]];
 
     /* Init picker elements */
     var pickerElements = [
@@ -53,7 +85,8 @@ class App extends React.Component {
       size: size,
       start_pos: -1,
       end_pos: -1,
-      active: 1
+      active: 1,
+      current_graph: 0
     };
   }
 
@@ -69,7 +102,7 @@ class App extends React.Component {
     this.clean = false;
     this.busy = true;
 
-    let g = new AStar(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
+    let g = new (this.graphs[this.state.current_graph])(this.state.boardElements, this.state.start_pos, this.state.end_pos, this.size);
     let visited_path = g.search();
 
     let visited = visited_path[0];
@@ -201,6 +234,12 @@ class App extends React.Component {
       this.resetSearchColors(elements);
   }
 
+  handleSearchChange(i){
+    this.setState({
+      current_graph: i
+    });
+  }
+
   clearBoard(){
     if(this.busy)
       return;
@@ -228,6 +267,8 @@ class App extends React.Component {
           <Board size={this.state.size} elements={this.state.boardElements}
                  onClick={(i) => this.handleBoardClick(i)}/>
           <div className="editor-controls">
+            <SearchDropdown searches={this.searches} current={this.state.current_graph}
+                            onClick={(i) => this.handleSearchChange(i)}/>
             <button className="start" onClick={() => this.startSearch()}>
               Start
             </button>

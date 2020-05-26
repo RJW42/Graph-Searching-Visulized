@@ -96,3 +96,31 @@
   background-color: red;
   color:white;
 }
+
+.search-dropdown{
+  margin-bottom: 20px;
+}
+
+.search-dropdown-button{
+  border: 2px solid grey;
+}
+
+.search-dropdown:hover .search-dropdown-button{
+  background-color: gainsboro;
+}
+
+.search-dropdown button{
+  margin: 0;
+}
+
+.search-dropdown-contnent{
+  display: none;
+}
+
+.search-dropdown:hover .search-dropdown-contnent{
+  display: block;
+}
+
+.dropdown-content-button:hover{
+  background-color: gainsboro;
+}
