@@ -252,7 +252,9 @@ class App extends React.Component {
     }
 
     this.setState({
-      boardElements: elements
+      boardElements: elements,
+      start_pos: -1,
+      end_pos: -1
     });
 
     this.clean = true;
