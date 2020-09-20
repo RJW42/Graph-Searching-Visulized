@@ -1,6 +1,10 @@
 import React from 'react';
 
 class Element extends React.Component{
+  /*
+   * Represents each sqaure in the grid drawn to the user.
+   */
+
   render(){
     return(
       <button className="board-element"
@@ -12,6 +16,16 @@ class Element extends React.Component{
 }
 
 class Board extends React.Component{
+  /*
+   * Creates the grid of sqaures which the user will create there maze.
+   *
+   * The board is created by drawing an array of Ellements (HTML buttons)
+   * then using CSS to put them in a nice format.
+   *
+   * The onclock function for each button is handled in APP and passed down.
+   * This allows the buttons to not work when running the graph search.
+   */
+
   /* Rendering */
   renderElement(i){
     let value = this.props.elements[i][0];

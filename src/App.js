@@ -91,7 +91,7 @@ class App extends React.Component {
     };
   }
 
-  /* Handle searching of the board */
+  /* Handle searching of the board (grid) */
   startSearch(){
     if(this.busy)
       return;
@@ -148,29 +148,22 @@ class App extends React.Component {
     }, t);
   }
 
-  resetSearchColors(elements=this.state.boardElements.slice()){
-    if(this.busy)
-      return;
-
-    for(let i = 0; i < this.size * this.size; i++){
-      elements[i] = [elements[i][0], elements[i][1], ""];
-    }
-
-    this.setState({
-      boardElements: elements
-    });
-
-    this.clean = true;
-  }
-
   /* Handle Edditing of the board */
   handlePickerClick(i){
+    /*
+     * Deals with the canging of the selected tile (i.e selected tile being
+     * item that will be placed on the board e.g. wall, start, ...)
+     */
     this.setState({
       active: i
     });
   }
 
   handleBoardClick(i){
+    /*
+     * Deals with all aspects of the user clicking the board
+     */
+
     if(this.busy)
       return;
 
@@ -236,12 +229,18 @@ class App extends React.Component {
   }
 
   handleSearchChange(i){
+    /*
+     * Change the current search algorithm
+     */
     this.setState({
       current_graph: i
     });
   }
 
   clearBoard(){
+    /*
+     * Remove all items on the board.
+     */
     if(this.busy)
       return;
 
@@ -250,6 +249,26 @@ class App extends React.Component {
 
     for(let i = 0; i < this.size * this.size; i++){
       elements[i] = [base.color, base.value, ""];
+    }
+
+    this.setState({
+      boardElements: elements
+    });
+
+    this.clean = true;
+  }
+
+  resetSearchColors(elements=this.state.boardElements.slice()){
+    /*
+     * Clears the route drawn on the board from the search. But leaves
+     * all walls, start, end, ... items on the board
+     */
+
+    if(this.busy)
+      return;
+
+    for(let i = 0; i < this.size * this.size; i++){
+      elements[i] = [elements[i][0], elements[i][1], ""];
     }
 
     this.setState({
