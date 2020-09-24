@@ -1,4 +1,15 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Graph searching visualised 
+## Overview
+During lockdown I wanted to gain some experience with react. To do this I decided to create a program which allows the user to draw a maze on a grid and watch a graph searching algorithm solve the maze. Currently using either Dijkstra or A* algorithm.
+
+## Screenshots
+
+
+## Bugs / Improvements 
+There are a few bugs within the A* implementation. One being it does not deal with weighted nodes (using the faster / fast tiles) correctly. I am working on fixing this but, since the main idea behind this project was to gain react experience and not implement graph functions, it is not a top priority.
+
+Also given there are only two searching algorithms to use I would like to expand this. Possibly implementing basic DFS or BFS. 
+
 
 ## Available Scripts
 
